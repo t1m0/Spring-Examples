@@ -21,7 +21,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.SpringJPA.persistence;
+package com.t1m0.spring.SpringJPA.persistence;
 
 import java.util.List;
 
@@ -33,8 +33,8 @@ import javax.transaction.Transactional;
 import org.jboss.logging.annotations.Transform.TransformType;
 import org.springframework.stereotype.Component;
 
-import com.t1m0.SpringJPA.entities.Todo;
-import com.t1m0.SpringJPA.persistence.interfaces.LITodo;
+import com.t1m0.spring.SpringJPA.entities.Todo;
+import com.t1m0.spring.SpringJPA.persistence.interfaces.LITodo;
 
 /**
  * The Class TodoDAO persist Todo items.

@@ -12,7 +12,7 @@
 
 	<!-- Checks for annotations -->
 	<context:annotation-config/>
-	<context:component-scan base-package="com.t1m0.SpringJPA.persistence" />
+	<context:component-scan base-package="com.t1m0.spring.SpringJPA.persistence" />
 	
 	<!-- Data Source -->
 	<import resource="datasource.xml"/>
@@ -25,7 +25,7 @@
 	<!-- Declares the entity-manager-factory, which generates the entity-mangers in to DAO -->
 	<bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<!-- Declares which packages should be scanned for entities -->
-		<property name="packagesToScan" value="com.t1m0.SpringJPA.entities"/>
+		<property name="packagesToScan" value="com.t1m0.spring.SpringJPA.entities"/>
 		<!-- Declares the JPA-properties -->
 		<property name="jpaProperties" >
 			<props>

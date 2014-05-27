@@ -21,9 +21,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.SpringJPA.persistence.interfaces;
+package com.t1m0.spring.SpringJPA.persistence.interfaces;
 
-import com.t1m0.SpringJPA.entities.Todo;
+import com.t1m0.spring.SpringJPA.entities.Todo;
 
 /**
  * The Interface LITodo.

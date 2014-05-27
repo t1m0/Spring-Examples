@@ -21,11 +21,11 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.SpringJPA.persistence.interfaces;
+package com.t1m0.spring.SpringJPA.persistence.interfaces;
 
 import java.util.List;
 
-import com.t1m0.SpringJPA.entities.AEntity;
+import com.t1m0.spring.SpringJPA.entities.AEntity;
 
 // TODO: Auto-generated Javadoc
 /**

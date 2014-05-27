@@ -21,7 +21,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.SpringJPA.entities;
+package com.t1m0.spring.SpringJPA.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -21,7 +21,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.test.SpringJPA.junit;
+package com.t1m0.spring.SpringJPA.junit;
 
 
 import static org.junit.Assert.*;
@@ -37,8 +37,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.t1m0.SpringJPA.entities.Todo;
-import com.t1m0.SpringJPA.persistence.interfaces.LITodo;
+import com.t1m0.spring.SpringJPA.entities.Todo;
+import com.t1m0.spring.SpringJPA.persistence.interfaces.LITodo;
 
 /**
  * The Class SpringJPATest.
