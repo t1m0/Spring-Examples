@@ -13,7 +13,7 @@
  	
 	<mvc:annotation-driven />
 	<mvc:resources mapping="css/**" location="/WEB-INF/css/" />
-	<context:component-scan base-package="com.t1m0.*" />
+	<context:component-scan base-package="com.t1m0.spring.SpringMVC.controller" />
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
  		<property name="prefix" value="/WEB-INF/pages/"/>
  		<property name="suffix" value=".jsp"/>

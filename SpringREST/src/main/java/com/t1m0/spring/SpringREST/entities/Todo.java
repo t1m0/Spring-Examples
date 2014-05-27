@@ -21,7 +21,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.test.SpringREST.entities;
+package com.t1m0.spring.SpringREST.entities;
 
 /**
  * The entity Todo.

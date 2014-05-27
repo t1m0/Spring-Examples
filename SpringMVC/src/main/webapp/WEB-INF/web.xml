@@ -26,7 +26,7 @@
     	<location>/errors/404</location>
 	</error-page>
 	<error-page>
-    	<exception-type>com.t1m0.spring.SpringMVC.CustomException</exception-type>
+    	<exception-type>com.t1m0.spring.SpringMVC.exceptions.CustomException</exception-type>
     	<location>/errors/custom</location>
 	</error-page>
 	<error-page>

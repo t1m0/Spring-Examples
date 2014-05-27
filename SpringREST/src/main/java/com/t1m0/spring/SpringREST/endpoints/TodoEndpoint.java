@@ -21,7 +21,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.test.SpringREST.endpoints;
+package com.t1m0.spring.SpringREST.endpoints;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.t1m0.test.SpringREST.entities.Todo;
+import com.t1m0.spring.SpringREST.entities.Todo;
 
 /**
  * The rest end point.

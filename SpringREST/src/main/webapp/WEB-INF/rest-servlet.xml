@@ -7,21 +7,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="com.t1m0.test.SpringREST.endpoints" />
-	
+	<context:component-scan base-package="com.t1m0.spring.SpringREST.endpoints" />
 	<mvc:annotation-driven />
-	<!-- content-negotiation-manager="contentManager"/>
-	<bean id="contentManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-		<property name="favorPathExtension" value="true"/>
-		<property name="ignoreAcceptHeader" value="true" />
-		<property name="defaultContentType" value="text/html" />
-		<property name="useJaf" value="false"/>
-		<property name="mediaTypes">
-			<props>
-				<prop key="json">application/json</prop>
-				<prop key="html">text/html</prop>
-				<prop key="xml">application/xml</prop>
-			</props>
-		</property>
-	</bean> -->
 </beans>

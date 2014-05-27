@@ -21,7 +21,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.spring.SpringMVC;
+package com.t1m0.spring.SpringMVC.exceptions;
 
 /**
  * The custom exception, which is thrown to show how to handle exceptions.
