@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	<modelVersion>4.0.0</modelVersion>
+  	<groupId>com.t1m0.test</groupId>
+  	<artifactId>SpringREST</artifactId>
+  	<version>1.0</version>
+  	<packaging>war</packaging>
+  	<name>com.t1m0.test.SpringREST</name>
+  	<description>Description</description>
+  	<properties>
+		<java.version>1.8</java.version>
+		<junit.version>4.11</junit.version>
+		<org.slf4j.version>1.7.7</org.slf4j.version>
+		<org.mockito.version>1.9.5</org.mockito.version>
+    	<org.spring.version>4.0.4.RELEASE</org.spring.version>
+    	<org.wildfly.plugins.version>1.0.1.Final</org.wildfly.plugins.version>
+    	<org.apache.maven.plugins.version>3.1</org.apache.maven.plugins.version>
+	</properties>
+	<dependencies>
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${org.mockito.version}</version>
+		</dependency>
+		<!-- SLF4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+		<!-- Spring-web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${org.spring.version}</version>
+		</dependency>
+		<!-- Spring-web-mvc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.spring.version}</version>
+		</dependency>
+		<!-- Spring-test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.spring.version}</version>
+		</dependency>
+	</dependencies>
+  	<build>
+  		<finalName>SpringREST</finalName>
+  		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${org.apache.maven.plugins.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${org.wildfly.plugins.version}</version>
+            </plugin>
+		</plugins>
+  	</build>
+</project>

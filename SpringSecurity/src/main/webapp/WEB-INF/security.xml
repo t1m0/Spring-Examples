@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security.xsd">
+ 
+	<http auto-config="true">
+		<!-- Secured url pattern -->
+		<intercept-url pattern="/secure**" access="ROLE_USER" />
+		<!-- access denied page -->
+		<access-denied-handler error-page="/errors/403" />
+		<!-- Custom login page -->
+		<form-login 
+		    login-page="/login" 
+		    default-target-url="/secure" 
+			authentication-failure-url="/errors/500" 
+			username-parameter="username"
+			password-parameter="password" />
+		<!-- Logout url -->
+		<logout logout-success-url="/login?logout" />
+	</http>
+	
+	<!-- Simple authentication manager -->
+	<!--<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="t1m0" password="test" authorities="ROLE_USER" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>-->
+	
+	<!-- Select users and user_roles from database -->
+	<authentication-manager>
+		<authentication-provider user-service-ref="userService"/>
+	</authentication-manager>
+	<beans:bean id="userService" class="com.t1m0.test.SpringSecurity.services.UserService"/>
+</beans:beans>
