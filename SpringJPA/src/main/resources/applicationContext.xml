@@ -31,7 +31,6 @@
 	<!-- Persistence Provider -->
 	<!-- Declares the Hibernate persistence provider -->
 	<bean id="hibernatePersistenceProvider" class="org.hibernate.jpa.HibernatePersistenceProvider"/>
-	
 	<!-- Entity Manager Factory -->
 	<!-- Declares the entity-manager-factory, which generates the entity-mangers in to DAO -->
 	<bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

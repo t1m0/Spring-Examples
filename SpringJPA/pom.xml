@@ -35,21 +35,19 @@
 			<artifactId>hsqldb</artifactId>
 			<version>${org.hsqldb.version}</version>
 		</dependency>
-		<!-- HIBERNATE DEPENDENCIES -->
+		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${org.hibernate.version}</version>
 		</dependency>
-		<!-- SPRING DATA -->
+		<!-- Spring Test -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${org.spring.data.jpa}</version>
 		</dependency>
-		<!-- Support for testing Spring applications with tools such as JUnit and 
-			TestNG This artifact is generally always defined with a 'test' scope for 
-			the integration testing framework and unit testing stubs -->
+		<!-- Spring Test -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>

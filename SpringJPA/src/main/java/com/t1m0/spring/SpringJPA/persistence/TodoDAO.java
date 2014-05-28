@@ -30,7 +30,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
-import org.jboss.logging.annotations.Transform.TransformType;
 import org.springframework.stereotype.Component;
 
 import com.t1m0.spring.SpringJPA.entities.Todo;
@@ -40,7 +39,7 @@ import com.t1m0.spring.SpringJPA.persistence.interfaces.LITodo;
  * The Class TodoDAO persist Todo items.
  */
 @Component(value=TodoDAO.BEAN_NAME)
-@Transactional()
+@Transactional
 public class TodoDAO implements LITodo {
 	
 	/** The Constant BEAN_NAME. */
@@ -51,7 +50,7 @@ public class TodoDAO implements LITodo {
 	
 	
 	/** The manager. */
-	@PersistenceContext()
+	@PersistenceContext
 	private EntityManager manager;
 
 	/** 
