@@ -21,12 +21,11 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.spring.SpringREST.endpoints;
+package com.t1m0.spring.SpringHATOEAS.endpoints;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,72 +36,92 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.t1m0.spring.SpringREST.entities.Todo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import com.t1m0.spring.SpringHATOEAS.entities.User;
+import com.t1m0.spring.SpringHATOEAS.services.IDataService;
 
 /**
- * The rest end point.
+ * The rest end point for the resource {@link User}.
  */
 @RestController
-@RequestMapping(value="/todo", produces=MediaType.APPLICATION_JSON_VALUE)
-public class TodoEndpoint {
+@RequestMapping(value="/user", produces=MediaType.APPLICATION_JSON_VALUE)
+public class UserEndpoint {
 	
-	/** The id_counter. */
-	private long id_counter = 0;
-	
-	/** The todos. */
-	@SuppressWarnings("serial")
-	private Map<Long,Todo> todos = new HashMap<Long,Todo>(){{
-		put(id_counter,new Todo(id_counter, "Test 0", "Test 0"));
-		put(++id_counter,new Todo(id_counter, "Test 1", "Test 1"));
-		put(++id_counter,new Todo(id_counter, "Test 2", "Test 2"));
-	}};
+	@Autowired
+	IDataService ds;
 	
 	/**
-	 * Gets a list of all todos.
+	 * Gets a list of all users.
 	 *
-	 * @return the list of todos
+	 * @return the list of users
 	 */
 	@ResponseStatus(value=HttpStatus.OK)
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<Collection<Todo>> getListTodo() {
-		return new ResponseEntity<Collection<Todo>>(todos.values(),HttpStatus.OK);
+	public ResponseEntity<Collection<User>> getListUser() {
+		Collection<User> users = ds.allUsers();
+		//Ensures, that each user has the hatoeas links
+		users.forEach(u-> u.hatoeas());
+		return new ResponseEntity<Collection<User>>(users,HttpStatus.OK);
 	}
 	
 	/**
-	 * Gets the requested todo.
+	 * Gets the requested user.
 	 *
 	 * @param uid
 	 *            the uid
-	 * @return the todo
+	 * @return the user
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/{uid}")
-	public ResponseEntity<Todo> getTodo(@PathVariable long uid) {
-		return new ResponseEntity<Todo>(todos.get(uid),HttpStatus.OK);
+	public ResponseEntity<User> getUser(@PathVariable long uid) {
+		User u = ds.getUser(uid);
+		//Ensures, that that user has the hatoeas links
+		u.hatoeas();
+		return new ResponseEntity<User>(u,HttpStatus.OK);
 	}
 	
     /**
-	 * Adds the given todo.
+	 * Adds the given user.
 	 *
 	 * @param t
 	 *            the t
-	 * @return the response entity< todo>
+	 * @return the response entity< user>
 	 */
     @RequestMapping(method = RequestMethod.POST, consumes={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Todo> addTodo(@RequestBody Todo t) {
-		t.setUID(++id_counter);
-		todos.put(id_counter, t);
-		return new ResponseEntity<Todo>(t,HttpStatus.CREATED);
+    public ResponseEntity<User> addUser(@RequestBody User u) {
+		u = ds.addUser(u);
+		//Ensures, that that user has the hatoeas links
+		u.hatoeas();
+		return new ResponseEntity<User>(u,HttpStatus.CREATED);
     }
     
     /**
-	 * Deletes the given todo.
+	 * Deletes the given user.
 	 *
 	 * @param uid
 	 *            the uid
-	 * @return the response entity< todo>
+	 * @return the response entity< user>
 	 */
     @RequestMapping(method = RequestMethod.DELETE, value = "/{uid}")
-    ResponseEntity<Todo> deleteTodo(@PathVariable long uid) {
-    	return new ResponseEntity<Todo>(todos.remove(uid), HttpStatus.NOT_FOUND);
+    ResponseEntity<User> deleteUser(@PathVariable long uid) {
+    	ds.removeUser(uid);
+    	return new ResponseEntity<User>(new User(), HttpStatus.NOT_FOUND);
+    }
+    
+    /**
+	 * Updates the given user.
+	 *
+	 * @param t
+	 *            the t
+	 * @return the response entity< user>
+	 */
+    @RequestMapping(method = RequestMethod.PUT, consumes={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<User> updateUser(@RequestBody User u) {
+    	//Ensures, that that user has the hatoeas links
+    	u.hatoeas();
+    	u = ds.updateUser(u);
+		return new ResponseEntity<User>(u,HttpStatus.CREATED);
     }
 }
+

@@ -21,12 +21,13 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
  */
-package com.t1m0.spring.SpringREST.endpoints;
+package com.t1m0.spring.SpringHATOEAS.endpoints;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
+import javassist.tools.framedump;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,25 +38,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.t1m0.spring.SpringREST.entities.Todo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import com.t1m0.spring.SpringHATOEAS.entities.Todo;
+import com.t1m0.spring.SpringHATOEAS.services.IDataService;
 
 /**
- * The rest end point.
+ * The rest end point for the resource {@link Todo}.
  */
 @RestController
 @RequestMapping(value="/todo", produces=MediaType.APPLICATION_JSON_VALUE)
 public class TodoEndpoint {
 	
-	/** The id_counter. */
-	private long id_counter = 0;
-	
-	/** The todos. */
-	@SuppressWarnings("serial")
-	private Map<Long,Todo> todos = new HashMap<Long,Todo>(){{
-		put(id_counter,new Todo(id_counter, "Test 0", "Test 0"));
-		put(++id_counter,new Todo(id_counter, "Test 1", "Test 1"));
-		put(++id_counter,new Todo(id_counter, "Test 2", "Test 2"));
-	}};
+	@Autowired
+	IDataService ds;
 	
 	/**
 	 * Gets a list of all todos.
@@ -65,7 +62,11 @@ public class TodoEndpoint {
 	@ResponseStatus(value=HttpStatus.OK)
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Collection<Todo>> getListTodo() {
-		return new ResponseEntity<Collection<Todo>>(todos.values(),HttpStatus.OK);
+		Collection<Todo> todos = ds.allTodos();
+		//Ensures, that each todo has the hatoeas links
+		todos.forEach(
+			t-> t.hatoeas());
+		return new ResponseEntity<Collection<Todo>>(todos,HttpStatus.OK);
 	}
 	
 	/**
@@ -77,7 +78,10 @@ public class TodoEndpoint {
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/{uid}")
 	public ResponseEntity<Todo> getTodo(@PathVariable long uid) {
-		return new ResponseEntity<Todo>(todos.get(uid),HttpStatus.OK);
+		Todo t = ds.getTodo(uid);
+		//Ensures, that that todo has the hatoeas links
+		t.hatoeas();
+		return new ResponseEntity<Todo>(t,HttpStatus.OK);
 	}
 	
     /**
@@ -89,8 +93,9 @@ public class TodoEndpoint {
 	 */
     @RequestMapping(method = RequestMethod.POST, consumes={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Todo> addTodo(@RequestBody Todo t) {
-		t.setUID(++id_counter);
-		todos.put(id_counter, t);
+		t = ds.addTodo(t);
+		//Ensures, that that todo has the hatoeas links
+		t.hatoeas();
 		return new ResponseEntity<Todo>(t,HttpStatus.CREATED);
     }
     
@@ -103,6 +108,22 @@ public class TodoEndpoint {
 	 */
     @RequestMapping(method = RequestMethod.DELETE, value = "/{uid}")
     ResponseEntity<Todo> deleteTodo(@PathVariable long uid) {
-    	return new ResponseEntity<Todo>(todos.remove(uid), HttpStatus.NOT_FOUND);
+    	ds.removeTodo(uid);
+    	return new ResponseEntity<Todo>(new Todo(), HttpStatus.NOT_FOUND);
+    }
+    
+    /**
+	 * Updates the given todo.
+	 *
+	 * @param t
+	 *            the t
+	 * @return the response entity< todo>
+	 */
+    @RequestMapping(method = RequestMethod.PUT, consumes={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<Todo> updateTodo(@RequestBody Todo t) {
+    	//Ensures, that that todo has the hatoeas links
+    	t.hatoeas();
+    	t = ds.updateTodo(t);
+		return new ResponseEntity<Todo>(t,HttpStatus.CREATED);
     }
 }
