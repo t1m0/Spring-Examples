@@ -5,12 +5,10 @@ This project shows how to implement an REST controller with [Spring MVC](http://
 A REST architecture provides it's data as resource to other applications.
 Resources are accessed by a Uniform Resource Identifiers (URIs), which are links in the context of web applications.
 These URIs are accessed with different HTTP methods to perfom different operations.
-Methods | Behavior
-------- | -------------------------------------------
-GET     | Returns a resource / resource list
-POST    | Creates a resource
-PUT     | Updates a resource (should be repeadable)
-DELETE  | Deletes a resource
+* GET - Returns a resource / resource list
+* POST - Creates a resource
+* PUT - Updates a resource (should be repeadable)
+* DELETE - Deletes a resource
 
 ##Project Target
 In this project we want to implement a REST web service which exposes a 'Todo' resource.
