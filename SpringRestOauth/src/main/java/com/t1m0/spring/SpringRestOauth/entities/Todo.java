@@ -23,16 +23,22 @@
  */
 package com.t1m0.spring.SpringRestOauth.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
 /**
  * The entity Todo.
  */
+@Entity
 @SuppressWarnings("serial")
 public class Todo extends AEntity {
 
 	/** The name. */
+	@Column(name="name")
 	private String name = null;
 
 	/** The description. */
+	@Column(name="description")
 	private String description = null;
 
 	/**
@@ -54,23 +60,6 @@ public class Todo extends AEntity {
 		super();
 		this.name = name;
 		this.description = description;
-	}
-
-	/**
-	 * The Constructor.
-	 *
-	 * @param uid
-	 *            the uid
-	 * @param name
-	 *            the name
-	 * @param description
-	 *            the description
-	 */
-	public Todo(long uid, String name, String description) {
-		super();
-		this.name = name;
-		this.description = description;
-		setUID(uid);
 	}
 
 	/**

@@ -24,9 +24,10 @@
 package com.t1m0.spring.SpringRestOauth.endpoints;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,24 +39,26 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.t1m0.spring.SpringRestOauth.entities.User;
+import com.t1m0.spring.SpringRestOauth.services.interfaces.LIUser;
 
 /**
  * The secure rest end point.
  */
 @RestController
 @RequestMapping(value="/secure", produces=MediaType.APPLICATION_JSON_VALUE)
-public class SecureEndpoint {
+public class UserEndpoint {
 
-	/** The id_counter. */
-	private long id_counter = 0;
+	/** The dao. */
+	@Autowired
+	private LIUser dao;
 
-	/** The todos. */
-	@SuppressWarnings("serial")
-	private Map<Long,User> users = new HashMap<Long,User>(){{
-		put(id_counter,new User(id_counter, "timo"));
-		put(++id_counter,new User(id_counter, "hans"));
-		put(++id_counter,new User(id_counter, "peter"));
-	}};
+	@PostConstruct
+	private void inital(){
+		User u0 = new User("timo", "test", User.Role.ROLE_ADMIN);
+		dao.create(u0);
+		User u1 = new User("hans", "test", User.Role.ROLE_USER);
+		dao.create(u1);
+	}
 
 	/**
 	 * Gets a list of all users.
@@ -65,7 +68,7 @@ public class SecureEndpoint {
 	@ResponseStatus(value=HttpStatus.OK)
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Collection<User>> getListUser() {
-		return new ResponseEntity<Collection<User>>(users.values(),HttpStatus.OK);
+		return new ResponseEntity<Collection<User>>(dao.all(),HttpStatus.OK);
 	}
 
 	/**
@@ -77,21 +80,19 @@ public class SecureEndpoint {
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/{uid}")
 	public ResponseEntity<User> getUser(@PathVariable long uid) {
-		return new ResponseEntity<User>(users.get(uid),HttpStatus.OK);
+		return new ResponseEntity<User>(dao.read(uid),HttpStatus.OK);
 	}
 
 	/**
 	 * Adds the given user.
 	 *
-	 * @param t
-	 *            the t
+	 * @param u
+	 *            the u
 	 * @return the response entity< user>
 	 */
 	@RequestMapping(method = RequestMethod.POST, consumes={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<User> addUser(@RequestBody User t) {
-		t.setUID(++id_counter);
-		users.put(id_counter, t);
-		return new ResponseEntity<User>(t,HttpStatus.CREATED);
+	public ResponseEntity<User> addUser(@RequestBody User u) {
+		return new ResponseEntity<User>(dao.create(u),HttpStatus.CREATED);
 	}
 
 	/**
@@ -103,6 +104,8 @@ public class SecureEndpoint {
 	 */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{uid}")
 	ResponseEntity<User> deleteUser(@PathVariable long uid) {
-		return new ResponseEntity<User>(users.remove(uid), HttpStatus.NOT_FOUND);
+		User u = dao.read(uid);
+		dao.delete(u);
+		return new ResponseEntity<User>(u, HttpStatus.NOT_FOUND);
 	}
 }
