@@ -10,6 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -23,11 +25,13 @@ import com.t1m0.spring.SpringRestOauth.services.interfaces.LIClient;
 @Transactional
 @Component(ClientService.BEAN_NAME)
 public class ClientService implements LIClient {
+	
+	private final Logger LOG = LoggerFactory.getLogger(ClientService.class);
 
 	public final static String BEAN_NAME = "customClientDetails";
 
 	/** The sql all. */
-	private final String SQL_ALL = "SELECT c FROM Client c";
+	private final String SQL_ALL = "select c from Client c";
 
 	/** The sql all. */
 	private final String SQL_BY_CLIENTID = "select c from Client c where c.clientId = :id";
@@ -35,24 +39,6 @@ public class ClientService implements LIClient {
 	/** The manager. */
 	@PersistenceContext
 	private EntityManager manager;
-
-	@PostConstruct
-	private void inital(){
-		@SuppressWarnings("serial")
-		Set<String> set = new HashSet<String>(){{
-			add("read");
-			add("write");
-			add("trust");
-		}};
-		Client c0 = new Client("my-trusted-client-with-secret", "somesecret");
-		c0.setAuthorizedGrantTypes(set);
-		c0.setAuthorities(AuthorityUtils.createAuthorityList(User.Role.ROLE_USER.name()));
-		create(c0);
-		Client c1 = new Client("web-client");
-		c1.setAuthorizedGrantTypes(set);
-		c1.setAuthorities(AuthorityUtils.createAuthorityList(User.Role.ROLE_USER.name()));
-		create(c1);
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -108,9 +94,11 @@ public class ClientService implements LIClient {
 		q.setParameter("id",clientId);
 		Client c = null;
 		try{
-			c = (Client) q.getSingleResult();
+			c = (Client)q.getSingleResult();
 		}catch(Exception e){
-			throw new UsernameNotFoundException("Client id '"+clientId+"' not found!");
+			String err = "Client id '"+clientId+"' not found!";
+			LOG.error(err);
+			throw new UsernameNotFoundException(err);
 		}
 		return c;
 	}

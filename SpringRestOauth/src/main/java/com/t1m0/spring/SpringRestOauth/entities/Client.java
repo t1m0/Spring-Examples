@@ -31,6 +31,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -81,13 +82,13 @@ public class Client extends AEntity implements ClientDetails {
 	private boolean secretRequired = false;
 
 	/** The scopes assigned to the client. */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="tbl_client_scopes", joinColumns=@JoinColumn(name="client_id"))
 	@Column(name="scope")
 	private Set<String> scope = null;
 
 	/** The authorized grant types assigned to the client. */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="tbl_client_authorizedgranttypes", joinColumns=@JoinColumn(name="client_id"))
 	@Column(name="authorizedgranttypes")
 	private Set<String> authorizedGrantTypes = null;
@@ -96,29 +97,27 @@ public class Client extends AEntity implements ClientDetails {
 	 * The resources which can be accessed by the client.
 	 * (May ignored if null)
 	 */
-	//	@JoinColumn(name="resourceids")
-	//	@OneToMany(fetch=FetchType.EAGER)
-	//	@JoinTable(name="tbl_client_resourceids")
-	@Transient
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="tbl_client_resourceids", joinColumns=@JoinColumn(name="client_id"))
+	@Column(name="resourceids")
 	private Set<String> resourceIds = null;
 
 	/** The uris, which the client is redirected to after an successful authentication. */
-	//	@JoinColumn(name="registeredredirecturi")
-	//	@OneToMany(fetch=FetchType.EAGER)
-	//	@JoinTable(name="tbl_client_registeredredirecturi")
-	@Transient
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="tbl_client_registeredredirecturi", joinColumns=@JoinColumn(name="client_id"))
+	@Column(name="registeredredirecturi")
 	private Set<String> registeredRedirectUri = null;
 
 	/** The authorities assigned to the client. */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="tbl_client_authorities", joinColumns=@JoinColumn(name="client_id"))
 	@Column(name="authorities")
 	private Collection<GrantedAuthority> authorities = null;
 
 	/** Additional information for the client. */
-	//	@JoinColumn(name="additionalinformation")
-	//	@OneToMany(fetch=FetchType.EAGER)
-	//	@JoinTable(name="tbl_client_additionalinformation")
+//	@ElementCollection(fetch=FetchType.EAGER)
+//	@CollectionTable(name="tbl_client_additionalinformation", joinColumns=@JoinColumn(name="client_id"))
+//	@Column(name="additionalinformation")
 	@Transient
 	private Map<String, Object> additionalInformation = null;
 
@@ -377,7 +376,7 @@ public class Client extends AEntity implements ClientDetails {
 	 */
 	@Override
 	public boolean isAutoApprove(String scope) {
-		return true;
+		return false;
 	}
 
 	/**

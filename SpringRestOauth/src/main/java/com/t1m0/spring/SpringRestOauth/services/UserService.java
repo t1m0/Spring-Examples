@@ -30,11 +30,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.t1m0.spring.SpringRestOauth.entities.Client;
 import com.t1m0.spring.SpringRestOauth.entities.User;
 import com.t1m0.spring.SpringRestOauth.services.interfaces.LIUser;
 
@@ -46,10 +49,12 @@ import com.t1m0.spring.SpringRestOauth.services.interfaces.LIUser;
 @Component(UserService.BEAN_NAME)
 public class UserService implements LIUser {
 
-	public final static String BEAN_NAME = "userService";
+	public final static String BEAN_NAME = "customUserDetails";
 
+	private final Logger LOG = LoggerFactory.getLogger(UserService.class);
+	
 	/** The sql all. */
-	private final String SQL_ALL = "SELECT u FROM User u";
+	private final String SQL_ALL = "select u from User u";
 
 	/** The sql all. */
 	private final String SQL_BY_NAME = "select u from User u where u.username = :name";
@@ -111,11 +116,15 @@ public class UserService implements LIUser {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Query q = manager.createQuery(SQL_BY_NAME, User.class);
 		q.setParameter("name",username);
-		List<User> users = q.getResultList();
-		if(users.size() == 0){
-			throw new UsernameNotFoundException("Username '"+username+"' not found!");
+		User u = null;
+		try{
+			u = (User)q.getSingleResult();
+		}catch(Exception e){
+			String err ="User with username '"+username+"' not found!";
+			LOG.error(err);
+			throw new UsernameNotFoundException(err);
 		}
-		return users.get(0);
+		return u;
 	}
 
 }
