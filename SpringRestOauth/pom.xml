@@ -10,6 +10,7 @@
 		<junit.version>4.11</junit.version>
 		<org.slf4j.version>1.7.7</org.slf4j.version>
 		<org.hsqldb.version>2.3.2</org.hsqldb.version>
+		<javax.servlet.version>3.1.0</javax.servlet.version>
     	<org.spring.version>4.0.5.RELEASE</org.spring.version>
     	<org.spring.data.jpa>1.5.2.RELEASE</org.spring.data.jpa>
     	<org.hibernate.version>4.3.5.Final</org.hibernate.version>
@@ -19,7 +20,14 @@
     	<org.spring.security.oauth.version>2.0.1.RELEASE</org.spring.security.oauth.version>
 	</properties>
 	
-	<dependencies>    
+	<dependencies> 
+	<!-- Servlet API -->  
+    	<dependency>  
+        	<groupId>javax.servlet</groupId>  
+        	<artifactId>javax.servlet-api</artifactId>  
+        	<version>${javax.servlet.version}</version>  
+        	<scope>provided</scope>  
+    	</dependency>   
 		<!-- JUnit -->
 		<dependency>
 			<groupId>junit</groupId>
