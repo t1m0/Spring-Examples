@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:oauth="http://www.springframework.org/schema/security/oauth2"  
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security.xsd
+						http://www.springframework.org/schema/security/oauth2 
+						http://www.springframework.org/schema/security/spring-security-oauth2.xsd">
+	
+	<!-- Users and user_roles hardcoded -->
+	<authentication-manager alias="authenticationManager" >
+		<authentication-provider >
+			<user-service id="userService">
+				<user name="timo" password="test" authorities="ROLE_USER"/>
+				<user name="peter" password="test" authorities="ROLE_ADMIN"/>
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+	<!-- Used to create token and and every thing about them except for their persistence that is reposibility of TokenStore (Given here is a default implementation) -->
+	<beans:bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
+		<beans:property name="tokenStore" ref="tokenStore" />
+		<beans:property name="supportRefreshToken" value="true" />
+		<beans:property name="clientDetailsService" ref="clientDetails" />
+	</beans:bean>
+
+	<!-- The authorization-server (AuthorizationServerTokenServices) is an interface that defines everything necessary for token management -->
+	<oauth:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices" user-approval-handler-ref="userApprovalHandler">
+		<oauth:authorization-code />
+		<oauth:implicit />
+		<oauth:refresh-token />
+		<oauth:client-credentials />
+		<oauth:password />
+	</oauth:authorization-server>
+	
+	<!-- Managing the oauth clients -->
+	<beans:bean id="clientService" class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+		<beans:constructor-arg ref="clientDetails" />
+	</beans:bean>
+	
+	<!-- ClientsDeailsService: Entry Point to clients database (given is in memory implementation) -->
+	<oauth:client-details-service id="clientDetails">
+		<oauth:client 
+			client-id="the_client"
+			authorized-grant-types="authorization_code,client_credentials"
+            authorities="ROLE_USER"
+            scope="read,write,trust"
+            secret="secret" />
+		<oauth:client 
+			client-id="my-trusted-client-with-secret" 
+			authorized-grant-types="password,authorization_code,refresh_token,implicit"
+			secret="somesecret"
+			authorities="ROLE_USER"
+			scope="read,write,trust"/> 
+		 <!-- More clients
+		 <oauth:client 
+		 	client-id="my-trusted-client"
+		 	authorized-grant-types="password,authorization_code,refresh_token,implicit"
+			authorities="ROLE_CLIENT, ROLE_TRUSTED_CLIENT"
+			scope="read,write,trust"
+			access-token-validity="60"/>
+		<oauth:client 
+			client-id="my-client-with-secret"
+			authorized-grant-types="client_credentials"
+			authorities="ROLE_CLIENT"
+			scope="read"
+			secret="secret" />
+		<oauth:client 
+			client-id="my-less-trusted-client" 
+			authorized-grant-types="authorization_code,implicit"
+			authorities="ROLE_CLIENT" />
+		<oauth:client 
+			client-id="my-less-trusted-autoapprove-client"
+			authorized-grant-types="implicit"
+			authorities="ROLE_CLIENT" />
+		<oauth:client 
+			client-id="my-client-with-registered-redirect" 
+			authorized-grant-types="authorization_code,client_credentials"
+			authorities="ROLE_CLIENT"
+			redirect-uri="http://anywhere?key=value"
+			scope="read,trust" />
+		<oauth:client
+			client-id="my-untrusted-client-with-registered-redirect"
+			authorized-grant-types="authorization_code"
+			authorities="ROLE_CLIENT"
+			redirect-uri="http://anywhere"
+			scope="read" />
+		<oauth:client 
+			client-id="tonr"
+			resource-ids="sparklr"
+			authorized-grant-types="authorization_code,implicit"
+			authorities="ROLE_CLIENT" 
+			scope="read,write" 
+			secret="secret" />-->
+	</oauth:client-details-service>
+	
+</beans:beans>

@@ -32,19 +32,6 @@
 		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<access-denied-handler ref="oauthAccessDeniedHandler" />
 	</http>
-	
-	
-	<!-- Select users and user_roles from database -->
-	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="customUserDetails">
-			<!--password-encoder ref="passwordEncoder" /-->
-		</authentication-provider>
-	</authentication-manager>
-	<!--<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>-->
-	<!--beans:bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-		<beans:property name="userDetailsService" ref="userService" />
-		<beans:property name="passwordEncoder" ref="passwordEncoder" />
-	</beans:bean-->
  
  	<beans:bean id="oauthAuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
 		<beans:property name="realmName" value="test" />
@@ -78,31 +65,9 @@
 	<!-- Used for the persistence of tokens (currently an in memory implementation) -->
 	<beans:bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore" />
 
-	<!-- Used to create token and and every thing about them except for their persistence that is reposibility of TokenStore (Given here is a default implementation) -->
-	<beans:bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
-		<beans:property name="tokenStore" ref="tokenStore" />
-		<beans:property name="supportRefreshToken" value="true" />
-		<beans:property name="clientDetailsService" ref="customClientDetails" />
-	</beans:bean>
-
 	<beans:bean id="userApprovalHandler" class="org.springframework.security.oauth2.provider.approval.DefaultUserApprovalHandler"/>
 
-	<!-- The authorization-server (AuthorizationServerTokenServices) is an interface that defines everything necessary for token management -->
-	<oauth:authorization-server client-details-service-ref="customClientDetails" token-services-ref="tokenServices" user-approval-handler-ref="userApprovalHandler">
-		<!-- Available authentication methods -->
-		<oauth:authorization-code />
-		<oauth:implicit />
-		<oauth:refresh-token />
-		<oauth:client-credentials />
-		<oauth:password />
-	</oauth:authorization-server>
-
 	<oauth:resource-server id="resourceServerFilter" resource-id="test" token-services-ref="tokenServices" />
-	
-	<!-- Managing the oauth clients -->
-	<beans:bean id="clientService" class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
-		<beans:constructor-arg ref="customClientDetails" />
-	</beans:bean>
 
 	<global-method-security pre-post-annotations="enabled" proxy-target-class="true">
 		<expression-handler ref="oauthExpressionHandler" />
@@ -111,5 +76,15 @@
 	<oauth:expression-handler id="oauthExpressionHandler" />
 
 	<oauth:web-expression-handler id="oauthWebExpressionHandler" />
+	
+	
+
+	<!-- 
+		Client and User Management
+	 -->
+
+	<beans:import resource="security-database.xml"/>
+	
+	
 	
 </beans:beans>
