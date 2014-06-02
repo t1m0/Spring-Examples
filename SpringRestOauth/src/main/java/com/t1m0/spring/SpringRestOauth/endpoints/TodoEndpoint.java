@@ -45,7 +45,7 @@ import com.t1m0.spring.SpringRestOauth.services.interfaces.LITodo;
  * The rest end point.
  */
 @RestController
-@RequestMapping(value="/todo", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/rest/todo", produces=MediaType.APPLICATION_JSON_VALUE)
 public class TodoEndpoint {
 
 	/** The dao. */

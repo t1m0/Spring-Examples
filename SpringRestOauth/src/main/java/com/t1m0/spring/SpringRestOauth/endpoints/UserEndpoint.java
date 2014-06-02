@@ -46,7 +46,7 @@ import com.t1m0.spring.SpringRestOauth.services.interfaces.LIUser;
  * The secure rest end point.
  */
 @RestController
-@RequestMapping(value="/user", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/rest/user", produces=MediaType.APPLICATION_JSON_VALUE)
 public class UserEndpoint {
 
 	/** The dao. */

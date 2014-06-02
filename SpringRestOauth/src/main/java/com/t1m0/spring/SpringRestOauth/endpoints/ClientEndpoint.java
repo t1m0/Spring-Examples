@@ -49,7 +49,7 @@ import com.t1m0.spring.SpringRestOauth.services.interfaces.LIClient;
  * The secure rest end point.
  */
 @RestController
-@RequestMapping(value="/client", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/rest/client", produces=MediaType.APPLICATION_JSON_VALUE)
 public class ClientEndpoint {
 
 	/** The dao. */
