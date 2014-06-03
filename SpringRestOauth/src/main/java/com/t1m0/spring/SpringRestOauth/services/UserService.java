@@ -35,6 +35,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.t1m0.spring.SpringRestOauth.entities.Client;
@@ -67,7 +69,10 @@ public class UserService implements LIUser {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User create(final User a) {
+	public User create(User a) {
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(a.getPassword());
+		a.setPassword(hashedPassword);
 		manager.persist(a);
 		return a;
 	}

@@ -37,14 +37,17 @@
 	
 	<!-- Select users and user_roles from database -->
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="customUserDetails">
-			<!--password-encoder ref="passwordEncoder" /-->
-		</authentication-provider>
+		<!-- Injects the authentication provider -->
+		<authentication-provider ref="authProvider"/>
 	</authentication-manager>
-	<!--<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>-->
-	<!--beans:bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-		<beans:property name="userDetailsService" ref="userService" />
+	
+	<!-- Password encoder to encode user password -->
+	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
+	<!-- Authentication provider to authenticate users against encoded passwords -->
+	<beans:bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="customUserDetails" />
 		<beans:property name="passwordEncoder" ref="passwordEncoder" />
-	</beans:bean-->
+	</beans:bean>
 	
 </beans:beans>
