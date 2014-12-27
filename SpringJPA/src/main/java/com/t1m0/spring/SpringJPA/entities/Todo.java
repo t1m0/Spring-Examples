@@ -164,7 +164,7 @@ public class Todo extends AEntity {
 	 */
 	@Override
 	public String toString() {
-		return "Todo [name=" + name + ", description=" + description + "]";
+		return "Todo [id="+getId()+", name=" + name + ", description=" + description + "]";
 	}
 
 }
