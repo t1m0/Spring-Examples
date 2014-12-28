@@ -6,7 +6,7 @@
 		<meta charset="utf-8">
 		<title>Error 404</title>
 	    <!-- Bootstrap css -->
-	    <link href="/SpringMVC/css/bootstrap.min.css" rel="stylesheet">
+	    <link rel="stylesheet" href="/webjars/bootstrap/3.3.1/css/bootstrap.min.css" />
 	</head>
 	<body>
 		<div class="container">
