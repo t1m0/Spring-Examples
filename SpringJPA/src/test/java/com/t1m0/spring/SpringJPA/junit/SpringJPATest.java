@@ -42,7 +42,7 @@ import com.t1m0.spring.SpringJPA.persistence.interfaces.LITodo;
 
 /**
  * The Class SpringJPATest.
- * 
+ *
  * @author timo
  */
 @Transactional
