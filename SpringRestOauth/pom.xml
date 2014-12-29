@@ -1,126 +1,32 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.t1m0.spring</groupId>
-  <artifactId>SpringRestOauth</artifactId>
-  <version>1.0</version>
-  <packaging>war</packaging>
-
-	<properties>
-		<java.version>1.8</java.version>
-		<junit.version>4.11</junit.version>
-		<org.slf4j.version>1.7.7</org.slf4j.version>
-		<org.hsqldb.version>2.3.2</org.hsqldb.version>
-		<javax.servlet.version>3.1.0</javax.servlet.version>
-    	<org.spring.version>4.0.5.RELEASE</org.spring.version>
-    	<org.spring.data.jpa>1.5.2.RELEASE</org.spring.data.jpa>
-    	<org.hibernate.version>4.3.5.Final</org.hibernate.version>
-    	<org.wildfly.plugins.version>1.0.1.Final</org.wildfly.plugins.version>
-    	<org.spring.security.version>3.2.4.RELEASE</org.spring.security.version>	
-    	<org.apache.maven.plugins.version>3.1</org.apache.maven.plugins.version>
-    	<org.spring.security.oauth.version>2.0.1.RELEASE</org.spring.security.oauth.version>
-	</properties>
-	
-	<dependencies> 
-	<!-- Servlet API -->  
-    	<dependency>  
-        	<groupId>javax.servlet</groupId>  
-        	<artifactId>javax.servlet-api</artifactId>  
-        	<version>${javax.servlet.version}</version>  
-        	<scope>provided</scope>  
-    	</dependency>   
-		<!-- JUnit -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>SpringRestOauth</artifactId>
+	<parent>
+		<groupId>com.t1m0.spring</groupId>
+		<artifactId>core</artifactId>
+		<version>1.0.0.RELEASE</version>
+	</parent>
+	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-		</dependency>
-		<!-- SLF4J -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j.version}</version>
-		</dependency>
-		<!-- HSQL -->
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>${org.hsqldb.version}</version>
-		</dependency>
-		<!-- Hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${org.hibernate.version}</version>
-		</dependency>
-		<!-- Spring Data -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>${org.spring.data.jpa}</version>
-		</dependency>
-		<!-- Spring-web -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${org.spring.version}</version>
-		</dependency>
-		<!-- Spring-web-mvc -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${org.spring.version}</version>
-		</dependency>
-		<!-- Spring configuration -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${org.spring.version}</version>
-		</dependency>
-		<!-- Spring-Security -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${org.spring.security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${org.spring.security.version}</version>
-		</dependency>
-		<!-- for OAuth 2.0 -->
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-			<version>${org.spring.security.oauth.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-acl</artifactId>
-			<version>3.2.3.RELEASE</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-remote-shell</artifactId>
-			<version>1.0.0.RELEASE</version>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
 		</dependency>
 	</dependencies>
-  	<build>
-  		<finalName>${project.artifactId}</finalName>
-  		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${org.apache.maven.plugins.version}</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>${org.wildfly.plugins.version}</version>
-            </plugin>
-		</plugins>
-	</build>
 </project>

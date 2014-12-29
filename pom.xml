@@ -19,6 +19,7 @@
         <module>SpringREST</module>
         <module>SpringJMSReceiver</module>
         <module>SpringJMSSender</module>
+        <module>SpringRestOauth</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

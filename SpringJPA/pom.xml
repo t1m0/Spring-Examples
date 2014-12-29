@@ -2,10 +2,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>SpringJPA</artifactId>
-
-	<properties>
-		<org.apache.maven.plugins.version>3.1</org.apache.maven.plugins.version>
-	</properties>
 	<parent>
 		<groupId>com.t1m0.spring</groupId>
 		<artifactId>core</artifactId>
