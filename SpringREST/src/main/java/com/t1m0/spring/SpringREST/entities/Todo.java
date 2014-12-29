@@ -23,18 +23,26 @@
  */
 package com.t1m0.spring.SpringREST.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * The entity Todo.
  */
+@Entity
+@Table(name="tbl_todos")
 public class Todo extends AEntity {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 808336931892711497L;
 	
 	/** The name. */
+	@Column(name="name")
 	private String name = null;
 	
 	/** The description. */
+	@Column(name="description")
 	private String description = null;
 	
 	/**
@@ -61,18 +69,18 @@ public class Todo extends AEntity {
 	/**
 	 * The Constructor.
 	 *
-	 * @param uid
-	 *            the uid
+	 * @param id
+	 *            the id
 	 * @param name
 	 *            the name
 	 * @param description
 	 *            the description
 	 */
-	public Todo(long uid, String name, String description) {
+	public Todo(long id,String name, String description) {
 		super();
 		this.name = name;
 		this.description = description;
-		setUID(uid);
+		setId(id);
 	}
 	
 	/**
@@ -119,7 +127,7 @@ public class Todo extends AEntity {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -133,7 +141,7 @@ public class Todo extends AEntity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -156,7 +164,7 @@ public class Todo extends AEntity {
 	 */
 	@Override
 	public String toString() {
-		return "Todo [name=" + name + ", description=" + description + "]";
+		return "Todo [id="+getId()+", name=" + name + ", description=" + description + "]";
 	}
 
 }
