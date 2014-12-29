@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>SpringJMSSender</artifactId>
+	<properties>
+		<start-class>com.t1m0.spring.jms.AppConfig</start-class>
+		<activemq>5.7.0</activemq>
+	</properties>
+	<parent>
+		<groupId>com.t1m0.spring</groupId>
+		<artifactId>core</artifactId>
+		<version>1.0.0.RELEASE</version>
+	</parent>
+	<dependencies>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>${activemq}</version>
+        </dependency>
+	</dependencies>
+</project>
