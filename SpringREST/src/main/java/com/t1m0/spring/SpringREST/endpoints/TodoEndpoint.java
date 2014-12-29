@@ -45,20 +45,20 @@ import com.t1m0.spring.SpringREST.entities.Todo;
 @RestController
 @RequestMapping(value = "/todo", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TodoEndpoint {
-  
+
   /** The id_counter. */
   private long                  id_counter = 0;
-  
+
   /** The todos. */
   @SuppressWarnings("serial")
   private final Map<Long, Todo> todos      = new HashMap<Long, Todo>() {
-                                             {
-                                               put(id_counter, new Todo(id_counter, "Test 0", "Test 0"));
-                                               put(++id_counter, new Todo(id_counter, "Test 1", "Test 1"));
-                                               put(++id_counter, new Todo(id_counter, "Test 2", "Test 2"));
-                                             }
-                                           };
-  
+    {
+      put(id_counter, new Todo(id_counter, "Test 0", "Test 0"));
+      put(++id_counter, new Todo(id_counter, "Test 1", "Test 1"));
+      put(++id_counter, new Todo(id_counter, "Test 2", "Test 2"));
+    }
+  };
+
   /**
    * Gets a list of all todos.
    *
@@ -69,7 +69,7 @@ public class TodoEndpoint {
   public ResponseEntity<Collection<Todo>> getListTodo() {
     return new ResponseEntity<Collection<Todo>>(todos.values(), HttpStatus.OK);
   }
-  
+
   /**
    * Gets the requested todo.
    *
@@ -81,7 +81,7 @@ public class TodoEndpoint {
   public ResponseEntity<Todo> getTodo(@PathVariable final long uid) {
     return new ResponseEntity<Todo>(todos.get(uid), HttpStatus.OK);
   }
-  
+
   /**
    * Adds the given todo.
    *
@@ -91,11 +91,11 @@ public class TodoEndpoint {
    */
   @RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<Todo> addTodo(@RequestBody final Todo t) {
-    t.setUID(++id_counter);
+    t.setId(++id_counter);
     todos.put(id_counter, t);
     return new ResponseEntity<Todo>(t, HttpStatus.CREATED);
   }
-  
+
   /**
    * Deletes the given todo.
    *
